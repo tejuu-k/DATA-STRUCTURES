@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include<stdlib.h>
+#define MAX 5
+int queue[MAX];
+int front=-1;
+int rear=-1;
+void enqueue(int value)
+{
+    if(rear==MAX-1)
+       { printf("overflow condition");}
+    else {
+            if(front==-1)
+             {
+              front=0;
+             }
+              rear++;
+              queue[rear]=value;
+             }
+         }    
+
+int dequeue()
+  {  int data;
+     data=queue[front];
+     front++;
+     return data;
+  }
+void overflow()
+   { 
+       if(rear==MAX-1)
+         { printf("oveflow");
+           front=-1;
+           rear=-1;
+         }
+       
+   }
+void underflow()
+{ if(front==rear+1)
+    {
+        printf("underflow");
+    }}
+void display()
+{
+    if (front==-1|| front>rear)
+     { printf("empty queue");}
+    else
+    {
+    for(int i=front;i<=rear;i++)
+     { printf("%d ",queue[i]);} } }
+void new_array()
+{  if(rear==MAX-1)
+         { printf("\noveflow");
+           front=-1;
+           
+         }
+    if(front==-1&&rear==MAX-1)
+    {
+        printf("\nqueue is filled");
+        int queue2[5];
+    } }
+void main()
+{
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+    enqueue(50);
+    //dequeue();
+    //dequeue();
+    //overflow();
+    //underflow();
+    display();
+    new_array();
+}
