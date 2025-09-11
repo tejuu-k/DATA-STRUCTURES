@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node* link;  };
+struct node* del_beg(struct node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return NULL;  }
+    struct node* temp = head;
+    head = head->link;
+    free(temp);
+    return head;  }
+struct node* del_end(struct node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return NULL; }
+    if (head->link == NULL) {
+        free(head);
+        return NULL;  }
+    struct node* temp = head;
+    struct node* prev = NULL;
+    while (temp->link != NULL) {
+        prev = temp;
+        temp = temp->link;   }
+    prev->link = NULL;
+    free(temp);
+    return head;  }
+struct node* del_pos(struct node* head, int pos) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return NULL;   }
+    struct node* temp = head;
+    if (pos == 1) {
+        head = head->link;
+        free(temp);
+        return head;   }
+    struct node* prev = NULL;
+    int i = 1;
+    while (temp != NULL && i < pos) {
+        prev = temp;
+        temp = temp->link;
+        i++;  }
+    if (temp == NULL) {
+        printf("Position %d not found.\n", pos);
+        return head;  }
+    prev->link = temp->link;
+    free(temp);
+    return head;  }
+void display(struct node* head) {
+    struct node* ptr1 = head;
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;   }
+    while (ptr1 != NULL) {
+        printf("%d -> ", ptr1->data);
+        ptr1 = ptr1->link; }
+    printf("NULL\n");
+}
+struct node* list() {
+    struct node* head = NULL;
+    struct node* ptr = NULL;
+    head = (struct node*)malloc(sizeof(struct node));
+    head->data = 45;
+    ptr = (struct node*)malloc(sizeof(struct node));
+    ptr->data = 98;
+    ptr->link = NULL;
+    head->link = ptr;
+    ptr = (struct node*)malloc(sizeof(struct node));
+    ptr->data = 30;
+    ptr->link = NULL;
+    head->link->link = ptr;
+    return head;  }
+int main() {
+    struct node* head = NULL;
+    int choice, pos;
+    head = list();
+    while (1) {
+        printf("\n---- MENU ----\n");
+        printf("1. Delete at beginning\n");
+        printf("2. Delete at end\n");
+        printf("3. Delete at specific position\n");
+        printf("4. Display list\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+switch (choice) {
+    case 1:
+        head = del_beg(head);
+        printf("Deleted node at beginning.\n");
+        display(head);
+        break;
+    case 2:
+        head = del_end(head);
+        printf("Deleted node at end.\n");
+        display(head);
+        break;
+    case 3:
+        printf("Enter position: ");
+        scanf("%d", &pos);
+        head = del_pos(head, pos);
+        printf("Deleted node at position %d.\n", pos);
+        display(head);
+        break;
+    case 4:
+        printf("Current list:\n");
+        display(head);
+        break;
+    case 5:
+        printf("Exiting program.\n");
+        exit(0);
+    default:
+        printf("Invalid choice!\n");
+}   }   return 0;   }
+
+OUTPUT:
+---- MENU ----
+1. Delete at beginning
+2. Delete at end
+3. Delete at specific position
+4. Display list
+5. Exit
+Enter your choice: 2
+Deleted node at end.
+45 -> 98 -> NULL
+
+---- MENU ----
+1. Delete at beginning
+2. Delete at end
+3. Delete at specific position
+4. Display list
+5. Exit
+Enter your choice: 5
+Exiting program.
+
